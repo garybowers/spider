@@ -1,0 +1,14 @@
+{
+    "workbench.iconTheme": "theia-file-icons",
+    "files.associations": {},
+    "git.decorations.colors": true,
+    "merge-conflict.autoNavigateNextConflict.enabled": true,
+    "editor.cursorBlinking": "blink",
+    "editor.cursorSmoothCaretAnimation": true,
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.shellArgs.linux": [],
+    "bazel.buildifierFixOnFormat": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workspace.preserveWindow": true
+}

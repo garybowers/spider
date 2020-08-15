@@ -1,0 +1,15 @@
+Host git.ssp.immersion.dev 
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/repo_ssh_rsa
+
+Host code.ssp.immersion.dev
+  Hostname gerrit.gerrit.svc.cluster.local
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/repo_ssh_rsa
+  Port 29418
+
+Host code.ssp.immersion.dev
+  Hostname gerrit.gerrit.svc.cluster.local
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/repo_ssh_rsa
+  Port 29418
