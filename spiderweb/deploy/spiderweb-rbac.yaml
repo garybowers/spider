@@ -1,0 +1,31 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spider-deployment-manager
+rules:
+- apiGroups: ["apps"] # "" indicates the core API group
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["services"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["persistentvolumeclaims"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["persistentvolumes"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: spider-deployment-manager-binding
+subjects:
+- kind: ServiceAccount
+  name: spiderweb-svc 
+roleRef:
+  kind: Role
+  name: spider-deployment-manager
+  apiGroup: rbac.authorization.k8s.io
+    

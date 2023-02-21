@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spiderweb-svc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spiderweb
+  labels:
+    app: spiderweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spiderweb
+  template:
+    metadata:
+      labels:
+        app: spiderweb
+    spec:
+      serviceAccountName: spiderweb-svc
+      containers:
+      - name: spiderweb
+        image: garybowers/spiderweb:0.54
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8080
+        env:
+        - name: "GOOGLE_CLIENT_ID"
+          value: <PLACE YOUR CLIENT ID HERE> 
+        - name: "GOOGLE_CLIENT_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: google-client-secret
+              key: GOOGLE_CLIENT_SECRET 
+        - name: "OAUTH_CALLBACK_URL"
+          value: "https://<REPLACE WITH YOUR DOMAIN>/auth/google/callback"
+        - name: "SPIDER_IMAGE"
+          value: gcr.io/b1-services-230040/spider:1.9.0-beta14
+        - name: "SPIDER_NAMESPACE"
+          value: "spider"
+        - name: "SPIDER_APPNAME"
+          value: "spider" 
+        - name: "SPIDERWEB_LISTEN_PORT"
+          value: "8080"
+        - name: "SPIDER_NFS_SERVER"
+          value: "<YOUR NFS SERVER HERE>" 
+        - name: "SPIDER_FQDN"
+          value: "<YOUR DOMAIN NAME HERE>"

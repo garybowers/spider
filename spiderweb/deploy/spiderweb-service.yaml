@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spiderweb
+  labels:
+    app: spiderweb
+spec:
+  selector:
+    app: spiderweb
+  ports:
+  - name: tcp-spiderweb
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: spiderweb-vs 
+  namespace: istio-system 
+spec:
+  gateways:
+  - ingress-gateway
+  hosts:
+  - spider.bowers1.com
+  http:
+  - match:
+    - uri:
+        prefix: "/"
+    route: 
+    - destination:
+        host: spiderweb.spider.svc.cluster.local 
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: google
+  namespace: istio-system
+spec:
+  hosts:
+  - oauth2.googleapis.com
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: DNS
+  location: MESH_EXTERNAL
